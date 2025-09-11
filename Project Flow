@@ -1,0 +1,82 @@
+1. EC2 MAster and Nodes
+
+a) We will launch 3 aws ubuntu machines - t3.medium 
+with all traffic enabled in the security group 6443, 3000, ssh, HTTP, HTTPS
+and use ebs as 20 gb storage
+
+-----------------------------------------------------------------------------------------------
+
+2. K8 Installation
+a) Follow K8 installation file 
+
+-----------------------------------------------------------------------------------------------
+
+3. Install Jenkins
+wget https://raw.githubusercontent.com/akshu20791/Deployment-script/main/jenkins.sh
+ls
+chmod +x jenkins.sh
+./jenkins.sh
+
+----------------------------------------------------------------------------------------------
+
+4. Gitbash work
+
+Create a new folder 
+Open git bash 
+And clone the repo 
+
+cd cicdakshat
+git branch devops1
+git checkout devops1
+
+vi file1
+# add some data in file
+
+git add .
+git commit -m"c1"
+
+git push -u origin devops1
+
+---------------------------------------------------------------------------------------------
+
+5. Jenkins pipeline
+
+a) Credentials and Plugins
+
+Plugin : Docker
+         Docker Pipeline
+Download kubernetes-cd.hpi file from this repo and in jenkins advance settings in plugin upload it
+
+go to master machine
+sudo user -aG docker jenkins
+service jenkins restart
+
+cd ~
+ls -a
+cd .kube
+ls
+cat config
+copy the whole config file
+
+Credentials :
+
+k8 credential
+kind : Kubernetes config
+scope : Global
+Id : k8sconfigpwd
+kubeconfig = enter directly = paste the config file data
+
+User name = your docker username
+Password = your docker hub password
+Id = dockerhub-pwd
+Description = dockerhub-pwd
+
+b) Pipeline
+
+New item -> pipeline name -> multibranch pipeline -> Display name = myfirstpipline
+-> Branch Source = add your git repo url -> mode by jenkinsfile script path Jenkinsfile
+-> Scan Multibranch Pipeline trigger = interval = 1min -> Discard old items = 2
+
+----------------------------------------------------------------------------------------------
+
+Accept pull request on github
